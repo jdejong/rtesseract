@@ -1,6 +1,7 @@
 require "pathname"
 require "tempfile"
-require 'RMagick'
+#require 'RMagick'
+require 'mini_magick'
 
 require "rtesseract/errors"
 require "rtesseract/mixed"
@@ -41,7 +42,8 @@ class RTesseract
 
   def self.read(src = nil, options = {}, &block)
     raise RTesseract::ImageNotSelectedError if src == nil
-    image = Magick::Image.read(src.to_s).first
+    #image = Magick::Image.read(src.to_s).first
+    image = MiniMagick::Image.open(src.to_s)
     yield image
     object = RTesseract.new("", options)
     object.from_blob(image.to_blob)
@@ -181,13 +183,13 @@ class RTesseract
 
   private
   def choose_processor!
-    if @processor.to_s == "mini_magick"
+    #if @processor.to_s == "mini_magick"
       require File.expand_path(File.dirname(__FILE__) + "/processors/mini_magick.rb")
       self.class.send(:include, MiniMagickProcessor)
-    else
-      require File.expand_path(File.dirname(__FILE__) + "/processors/rmagick.rb")
-      self.class.send(:include, RMagickProcessor)
-    end
+    #else
+    #  require File.expand_path(File.dirname(__FILE__) + "/processors/rmagick.rb")
+    #  self.class.send(:include, RMagickProcessor)
+    #end
   end
 end
 
