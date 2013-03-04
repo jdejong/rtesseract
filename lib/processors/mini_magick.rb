@@ -1,25 +1,12 @@
 require 'mini_magick'
 module MiniMagickProcessor
   def image_to_tiff
-    Rails.logger.info("Generate UID")
     generate_uid
-    Rails.logger.info("Tmp File >>")
     tmp_file = Pathname.new(Dir::tmpdir).join("#{@uid}_#{@source.basename}.tif").to_s
-    Rails.logger.info(tmp_file)
-    Rails.logger.info(@instance.nil?)
-    Rails.logger.info(@source.to_s)
-    begin
-      cat = @instance || MiniMagick::Image.open(@source.to_s)
-    rescue => e
-      Rails.logger.info("#{e.class.name} :: #{e.message}")
-    end
-    Rails.logger.info(cat.to_s)
+    cat = @instance || MiniMagick::Image.open(@source.to_s)
     cat.format("tif")
-    Rails.logger.info("Format")
     cat.crop("#{@w}x#{@h}+#{@x}+#{@y}") unless [@x, @y, @w, @h].compact == []
-    Rails.logger.info("Crop")
     cat.write tmp_file.to_s
-    Rails.logger.info("Save")
     return tmp_file
   end
 
