@@ -141,8 +141,11 @@ class RTesseract
 
   #Convert image to string
   def convert
+    Rails.logger.info("Generate UID")
     generate_uid
+    Rails.logger.info("File Path >>")
     tmp_file  = Pathname.new(Dir::tmpdir).join("#{@uid}_#{@source.basename}")
+    Rails.logger.info(tmp_file.to_s)
     Rails.logger.info("IMG 2 TIFF")
     tmp_image = image_to_tiff
     Rails.logger.info("Running CMD")
