@@ -9,6 +9,7 @@ module MiniMagickProcessor
     Rails.logger.info(@instance.nil?)
     Rails.logger.info(@source.to_s)
     cat = @instance || MiniMagick::Image.open(@source.to_s)
+    Rails.logger.info(cat.to_s)
     cat.format("tif")
     Rails.logger.info("Format")
     cat.crop("#{@w}x#{@h}+#{@x}+#{@y}") unless [@x, @y, @w, @h].compact == []
