@@ -6,6 +6,8 @@ module MiniMagickProcessor
     Rails.logger.info("Tmp File >>")
     tmp_file = Pathname.new(Dir::tmpdir).join("#{@uid}_#{@source.basename}.tif").to_s
     Rails.logger.info(tmp_file)
+    Rails.logger.info(@instance)
+    Rails.logger.info(@source.to_s)
     cat = @instance || MiniMagick::Image.open(@source.to_s)
     cat.format("tif")
     Rails.logger.info("Format")
