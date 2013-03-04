@@ -8,7 +8,11 @@ module MiniMagickProcessor
     Rails.logger.info(tmp_file)
     Rails.logger.info(@instance.nil?)
     Rails.logger.info(@source.to_s)
-    cat = @instance || MiniMagick::Image.open(@source.to_s)
+    begin
+      cat = @instance || MiniMagick::Image.open(@source.to_s)
+    rescue => e
+      Rails.logger.info("#{e.class.name} #{e.message}")
+    end
     Rails.logger.info(cat.to_s)
     cat.format("tif")
     Rails.logger.info("Format")
