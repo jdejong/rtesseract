@@ -6,7 +6,7 @@ module MiniMagickProcessor
     Rails.logger.info("Tmp File >>")
     tmp_file = Pathname.new(Dir::tmpdir).join("#{@uid}_#{@source.basename}.tif").to_s
     Rails.logger.info(tmp_file)
-    Rails.logger.info(@instance)
+    Rails.logger.info(@instance.nil?)
     Rails.logger.info(@source.to_s)
     cat = @instance || MiniMagick::Image.open(@source.to_s)
     cat.format("tif")
@@ -29,7 +29,6 @@ module MiniMagickProcessor
   end
 
   def is_a_instance?(object)
-    Rails.logger.info("Is Instance " + (object.class == MiniMagick::Image) )
     object.class == MiniMagick::Image
   end
 end
