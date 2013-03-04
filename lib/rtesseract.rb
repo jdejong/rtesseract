@@ -143,8 +143,11 @@ class RTesseract
   def convert
     generate_uid
     tmp_file  = Pathname.new(Dir::tmpdir).join("#{@uid}_#{@source.basename}")
+    Rails.logger.info("IMG 2 TIFF")
     tmp_image = image_to_tiff
+    Rails.logger.info("Running CMD")
     `#{@command} "#{tmp_image}" "#{tmp_file.to_s}" #{lang} #{psm} #{config_file} #{clear_console_output}`
+    Rails.logger.info("Read File")
     @value = File.read("#{tmp_file.to_s}.txt").to_s
     @uid = nil
     remove_file([tmp_image,"#{tmp_file.to_s}.txt"])
