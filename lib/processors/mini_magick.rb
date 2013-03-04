@@ -11,7 +11,7 @@ module MiniMagickProcessor
     begin
       cat = @instance || MiniMagick::Image.open(@source.to_s)
     rescue => e
-      Rails.logger.info("#{e.class.name} #{e.message}")
+      Rails.logger.info("#{e.class.name} :: #{e.message}")
     end
     Rails.logger.info(cat.to_s)
     cat.format("tif")
