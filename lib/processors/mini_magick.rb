@@ -29,6 +29,7 @@ module MiniMagickProcessor
   end
 
   def is_a_instance?(object)
+    Rails.logger.info("Is Instance " + (object.class == MiniMagick::Image) )
     object.class == MiniMagick::Image
   end
 end
