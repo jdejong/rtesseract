@@ -149,7 +149,9 @@ class RTesseract
     @value = File.read("#{tmp_file.to_s}.txt").to_s
     @uid = nil
     remove_file([tmp_image,"#{tmp_file.to_s}.txt"])
-  rescue
+  rescue Exception => e  
+    logger.error e.message  
+    logger.error e.backtrace.inspect 
     raise RTesseract::ConversionError
   end
 
